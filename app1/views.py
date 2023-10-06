@@ -22,4 +22,12 @@ class SnippetApi(APIView):
 
     def post(self, request, format=None):
         
+        snippet_serializer = SnippetSerializer(data=request.data)
+
+        if snippet_serializer.is_valid():
+
+            snippet_serializer.save()
+
+            return Response(snippet_serializer.data, status=200)
+        return Response(snippet_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
